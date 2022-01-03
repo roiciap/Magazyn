@@ -1,0 +1,74 @@
+package projekt;
+
+public class ProduktWaga implements Produkt {
+	int prefix;
+	int SKU;	
+	int Kontrolny;
+	int cena;
+	int waga;
+	String nazwa;
+
+	
+	public ProduktWaga() {
+		prefix=0;
+		SKU=0;
+		Kontrolny=0;
+		cena=0;
+		waga=0;
+		nazwa=null;
+	}
+	
+	
+	public String getCode() {
+		return String.valueOf(prefix)+String.valueOf(SKU)+String.valueOf(waga)+String.valueOf(Kontrolny);
+	}
+	
+	public String getString() {
+		return String.valueOf(prefix)+String.valueOf(SKU)+String.valueOf(waga)+String.valueOf(Kontrolny)+";"+nazwa+";"+waga+";";
+	}
+	
+	public int getCena() {
+		return cena*waga; 
+	}
+	
+	public boolean zmienAsortyment(Produkt p,int zmiana) {
+		if(!cmp(p)) return false;
+		waga+=zmiana;
+		if (waga<0) {
+			waga-=zmiana;
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean zmienAsortyment(String id,int zmiana) {
+		if(!checkID(id)) return false;
+		
+		waga+=zmiana;
+		if (waga<0) {
+			waga-=zmiana;
+			return false;
+		}
+		return true;
+	}
+	public boolean checkID(String id) {
+		if(id.startsWith(String.valueOf(prefix)+String.valueOf(SKU)))
+			return true;
+		
+		return false;
+	}
+	
+	public boolean cmp(Produkt a) {
+		if(a==this) return true;
+		
+		return false;
+	}
+	
+	public boolean usunProdukt(String kod) {
+		if(checkID(kod))
+			return true;
+		return false;
+	}
+	
+	
+}
