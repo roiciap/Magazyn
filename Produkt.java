@@ -1,4 +1,4 @@
-package projekt;
+package magazyn;
 
 public interface Produkt {
 	String getCode();
@@ -8,4 +8,5 @@ public interface Produkt {
 	boolean zmienAsortyment(String id,int zmiana);
 	boolean checkID(String id);
 	boolean usunProdukt(String kod);
+	boolean dodajProdukt(String sektor,Produkt produkt);
 }

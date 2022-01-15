@@ -1,4 +1,4 @@
-package projekt;
+package magazyn;
 
 public class ProduktIlosc implements Produkt{
 	int KrajID; 
@@ -68,6 +68,11 @@ public class ProduktIlosc implements Produkt{
 	public boolean usunProdukt(String kod) {
 		if(checkID(kod))
 			return true;
+		return false;
+	}
+
+	public boolean dodajProdukt(String sektor, Produkt produkt) {
+		
 		return false;
 	}
 	

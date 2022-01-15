@@ -1,4 +1,4 @@
-package projekt;
+package magazyn;
 
 import java.util.Map;
 import java.util.*;
@@ -20,7 +20,7 @@ public class Sprzedaz implements Tranzakcja{
 		
 		for(Map.Entry<String, Integer> rekord : produkty.entrySet()) {
 			if(!m.ObslugaTranzakcji(rekord.getKey(),-rekord.getValue()))//generuj error w razie niepowodzenia
-				System.out.println("nie udalo sie dodac "+rekord.getKey()+" x"+rekord.getValue());
+				System.out.println("nie udalo sie sprzedac "+rekord.getKey()+" x"+rekord.getValue());
 		}
 	}
 }

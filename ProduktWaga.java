@@ -1,4 +1,4 @@
-package projekt;
+package magazyn;
 
 public class ProduktWaga implements Produkt {
 	int prefix;
@@ -69,6 +69,9 @@ public class ProduktWaga implements Produkt {
 			return true;
 		return false;
 	}
-	
+	public boolean dodajProdukt(String sektor, Produkt produkt) {
+		
+		return false;
+	}
 	
 }

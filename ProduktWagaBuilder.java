@@ -1,4 +1,4 @@
-package projekt;
+package magazyn;
 
 public class ProduktWagaBuilder {
 	private ProduktWaga produkt;

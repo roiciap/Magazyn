@@ -1,10 +1,10 @@
-package projekt;
+package magazyn;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-//Kompozyt
+
 public class Sektor implements Produkt{
 	String nazwa;
 	List<Produkt> ListaProduktow;
@@ -20,15 +20,23 @@ public class Sektor implements Produkt{
 	}
 	
 	
-	public boolean dodajProdukt(Produkt produkt) {
-		if(produkt.getCode().startsWith("Sektor")) {//dodanie sektoru
-			///sprawdz czy produkty sie nie powtarzaja
-		}
+	public boolean dodajProdukt(String sektor,Produkt produkt) {
 		
 		if(checkID(produkt.getCode())) return false;
 		
-		ListaProduktow.add(produkt);
-		return true;
+		
+		if(sektor.equals(nazwa)) {
+			ListaProduktow.add(produkt);
+			return true;
+		}
+		if(checkID(sektor)) {
+			ProduktIterator it=new ProduktIterator(ListaProduktow);
+			if(it.getProdukt().dodajProdukt(sektor,produkt)) return true;
+			while(it.hasMore()) {
+				if(it.getNext().dodajProdukt(sektor,produkt)) return true;
+			}
+		}
+		return false;
 	}
 	
 	public boolean usunProdukt(String kod) {
@@ -83,21 +91,24 @@ public class Sektor implements Produkt{
 	}
 	
 	public String getCode() {
-		return "Sektor "+nazwa;
+		return nazwa;
 	}
 	
 	public String getString() {
 		ProduktIterator it=new ProduktIterator(ListaProduktow);
-		String lista=new String();		
+		String lista=new String();	
+		if(!nazwa.equals("magazyn")) {
 		
-		
-		if(ListaProduktow.isEmpty()) return "brak";
+		lista+="Sektor:"+getCode()+"=[\n";
+		}
+		if(ListaProduktow.isEmpty()) return "Sektor:"+getCode()+"=[]";
 		
 		lista+=it.getProdukt().getString()+"\n";
 		while(it.hasMore()) {
 			lista+=it.getNext().getString()+"\n";
 		}
-
+		if(!nazwa.equals("magazyn"))
+				lista+="]\n";
 
 		return lista;
 	}
@@ -129,11 +140,11 @@ public class Sektor implements Produkt{
 			if(it.getNext().zmienAsortyment(id,ilosc)) return true;
 		}
 		return false;
-			
-
 	}
 	
 	public boolean checkID(String id) {
+		if(id.equals(nazwa))return true;
+		
 		if(ListaProduktow.isEmpty()) return false;
 		ProduktIterator it=new ProduktIterator(ListaProduktow);
 		if(it.getProdukt().checkID(id)) return true;
@@ -142,9 +153,4 @@ public class Sektor implements Produkt{
 		}
 		return false;
 	}
-	
-	
-	
-	////////////////////////////
-	
 }

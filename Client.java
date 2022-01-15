@@ -1,4 +1,4 @@
-package projekt;
+package magazyn;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,25 +9,23 @@ import java.io.*;
 
 public class Client {
 	
-	public static void menu() {
-		System.out.println("____________________________________");
-		System.out.println("Wybierz:");
-		System.out.println("0.wyjdz\n1.Dodaj produkt \n2.Usun produkt\n3.Lista wszystkich produktow\n4.Tranzakcja \n5.Dodaj sektor \n");
-	}
-	
+
 	public static void Dodawanie(Magazyn m) {
 
 		Scanner scan = new Scanner(System.in);
 		String odp;
 		int cena;
-		System.out.print("typ produktu(1.ilosc 2.waga): ");
+		System.out.print("typ produktu(1.waga 2.ilosc): ");
 			odp=scan.next();
 			if(odp.equals("1")) {
 
 			System.out.print("Podaj id (7 znakow): ");
 			int SKU,prefix;
 			prefix=scan.nextInt();
-			
+			if(prefix<1000000) {
+				System.out.println("kod jest za krotki");
+				return;
+			}
 
 			SKU=prefix%100000;
 			prefix=(prefix-SKU)/100000;
@@ -47,14 +45,22 @@ public class Client {
 			br.setSKU(SKU);
 			br.setNazwa(odp);
 			br.setCena(cena);
-			ProduktWaga pw=br.getProdukt();
+			ProduktWaga p=br.getProdukt();
 			
+			System.out.print("Podaj sektor: ");
+			System.out.println(m.wypiszSektory());
+			odp=scan.next();
+			m.DodajProdukt(odp, p);
 
 			}
 			if(odp.equals("2")) {
 				int Kraj,Produkt,Producent,kont;
-				System.out.print("Podaj id (14 znakow): ");
+				System.out.print("Podaj id (13 znakow): ");
 				odp=scan.next();
+				if(odp.length()!=13) {
+					System.out.print("Nieprawidlowy kod");
+					return;
+				}
 				Kraj=Integer.parseInt(odp.substring(0, 3));
 				Producent=Integer.parseInt(odp.substring(3,7));
 				Produkt=Integer.parseInt(odp.substring(7,13));
@@ -76,13 +82,18 @@ public class Client {
 				System.out.println(Kraj+" "+Producent+" "+Produkt+" "+kont);
 				ProduktIlosc p=bi.getProdukt();
 				
-				System.out.println(p.getString());
+				System.out.print("Podaj sektor: ");
+				System.out.println(m.wypiszSektory());
+				odp=scan.next();
+				m.DodajProdukt(odp, p);
 			}
+
 	}
+
 	
 	public static void Usuwanie(Magazyn m) {
 		System.out.println(m.sektory.getString());
-		System.out.println("podaj kod produktu ktory chcesz usunac");
+		System.out.println("podaj kod produktu ktory chcesz usunac/n");
 		Scanner scan = new Scanner(System.in);
 		String odp;
 		odp=scan.next();
@@ -90,16 +101,105 @@ public class Client {
 		m.sektory.usunProdukt(odp);
 		System.out.println(m.sektory.getString());
 		
-		
+
+
 	}
 	
-	/*public static void Tranzakcja(Magazyn m) {
-		System.out.println()
+	public static void Tranzakcja(Magazyn m) {
+		System.out.println("1.Zakup/n2.Sprzedaz");
+		Scanner scan = new Scanner(System.in);
+		String odp;
+		odp=scan.next();
+		TworzenieTranzakcji t;
+		if(odp.equals("1")) {
+			t=new TworzenieTranzakcjiZakupu();
+		}
+		else if(odp.equals("2")) {
+			t=new TworzenieTranzakcjiSprzedazy();
+		}
+		else {
+			return;
+		}
 		
-	}*/
+		while(true) {
+			System.out.println("1.Dodaj Produkt");
+			System.out.println("2.Dokonaj tranzakcji");
+			
+			odp=scan.next();
+			if(odp.equals("1")) {
+				System.out.println("podaj ilosc");
+				int ilosc=scan.nextInt();
+				System.out.println("podaj kod");
+				odp=scan.next();
+				t.DodajProdukt(odp, ilosc);
+			}
+			if(odp.equals("2")) {
+				t.stworz(m);
+				break;
+			}
+		}
+
+	}
 	
+	public static void sektor(Magazyn m) {
+		System.out.println("Podaj nazwe setoru: ");
+		Scanner scan = new Scanner(System.in);
+		String odp;
+		odp=scan.next();
+		Sektor nowy =new Sektor(odp);
+		m.DodajSektor(nowy);
+	}
+	
+	public static void inwentaryzacja(Magazyn m) {
+		String odp,kod;
+		int ilosc;
+		Scanner scan = new Scanner(System.in);
+		Inwentaryzacja inw=new Inwentaryzacja();
+		while(true) {
+			System.out.println("1.Zeskanuj\n2.edytuj\n3.Sprawdz\n4.Wykonaj\n10.Porzuc ");
+			odp=scan.next();
+			if(odp.equals("1")) {
+				System.out.println("podaj kod");
+				kod=scan.next();
+				System.out.println("podaj ilosc");
+				ilosc=scan.nextInt();	
+				inw.zeskanuj(kod, ilosc);
+			}
+			if(odp.equals("2")) {
+				System.out.println("podaj kod");
+				kod=scan.next();
+				System.out.println("podaj ilosc zmiany");
+				ilosc=scan.nextInt();	
+				inw.edytuj(kod, ilosc);
+			}
+			if(odp.equals("3")) {
+				System.out.println(inw.getString());
+			}
+			if(odp.equals("4")) {
+				System.out.println(inw.wykonaj(m));
+				break;
+			}
+			if(odp.equals("10")) {
+				break;
+			}
+		}
+	}
+	
+	public static void menu() {
+		System.out.println("____________________________________");
+		System.out.println("Wybierz:");
+		System.out.println("0.wyjdz\n1.Dodaj produkt \n"
+				+ "2.Usun produkt\n"
+				+ "3.Lista wszystkich produktow\n"
+				+ "4.Tranzakcja \n"
+				+ "5.Dodaj sektor \n"
+				+ "6.Inwentaryzacja\n");
+	}
+			
 	public static void main(String[] args) {
-		
+		///////////////////////////////////////////
+		///tworzenie poczatkowego stanu magazynu///
+		///////////////////////////////////////////
 		Sektor s=new Sektor("A");
 		ProduktIloscBuilder bi=new ProduktIloscBuilder();
 		bi.setProduktID(11111);
@@ -118,16 +218,19 @@ public class Client {
 		bi.setNazwa("produkt2");
 		p2=bi.getProdukt();
 		
-		s.dodajProdukt(p1);
-		s.dodajProdukt(p2);
+		s.dodajProdukt(s.nazwa,p1);
+		s.dodajProdukt(s.nazwa,p2);
 		
 		
-		Magazyn m=new Magazyn(s);
+		Magazyn m=new Magazyn();
+		m.DodajSektor(s);
+		///////////////////////////////////////////
 		int a;
 		boolean dzialaj=true;
 		Scanner scan = new Scanner(System.in);
 		while(dzialaj) {
 			menu();
+
 			a=scan.nextInt();
 			
 			switch(a) {
@@ -142,13 +245,17 @@ public class Client {
 				break;
 			case 3:
 				System.out.println(m.sektory.getString());
+				System.out.println(m.wypiszSektory());
 				break;
-			/*case 4:
+			case 4:
 				Tranzakcja(m);
 				break;
 			case 5:
-				Sektor();
-				break;*/
+				sektor(m);
+				break;
+			case 6:
+				inwentaryzacja(m);
+				break;
 			}
 
 			
