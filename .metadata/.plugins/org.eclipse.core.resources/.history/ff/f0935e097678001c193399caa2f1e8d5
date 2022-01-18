@@ -1,0 +1,30 @@
+package projekt;
+
+public class menager extends Magazynier{
+
+	
+	@Override
+	public String getMenu() {
+		return"0.wyjdz\n1.Dodaj produkt \n"
+				+ "2.Usun produkt\n"
+				+ "3.Lista wszystkich produktow\n"
+				+ "4.Tranzakcja \n"
+				+ "5.Dodaj sektor \n"
+				+ "6.Inwentaryzacja\n"
+				+ "7.Zapisz\n"
+				+"8.Odczytaj\n";
+	}
+	
+	@Override 
+	public void perform(String choice, Magazyn m) {
+		if(choice.equals("1")) {
+			m.toString();
+		}
+		if(choice.equals("2")) {
+			Tranzakcja(m);
+		}
+		if(choice.equals("3")) {
+			inwentaryzacja(m);
+		}
+	}
+}

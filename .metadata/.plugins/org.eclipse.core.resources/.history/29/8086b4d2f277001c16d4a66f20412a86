@@ -1,0 +1,29 @@
+package projekt;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class ServerWorker extends Thread{
+	Magazyn m;
+	int serverPort;
+	Server s;
+	public ServerWorker(Server ser,Magazyn mag) {
+			s=ser;
+			m=mag;
+		}
+	
+
+		@Override 
+		public void run() {
+			 try {
+			ServerSocket serverSocket = new ServerSocket(serverPort);
+			while(true) {
+
+			}
+			 }
+			 catch(IOException e) {
+				 e.printStackTrace();
+			 }
+		}
+	}
+}

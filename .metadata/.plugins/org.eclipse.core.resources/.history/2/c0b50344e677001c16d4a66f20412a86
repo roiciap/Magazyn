@@ -1,0 +1,10 @@
+package magazyn;
+
+public class TworzenieTranzakcjiSprzedazy extends TworzenieTranzakcji{
+
+	@Override
+	Tranzakcja DodajTranzakcje() {
+		return new Sprzedaz();
+	}
+
+}

@@ -1,0 +1,2 @@
+admin;admin;meneger
+user;user;gostekzwykly

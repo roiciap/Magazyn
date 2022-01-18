@@ -1,0 +1,12 @@
+package projekt;
+
+public class Server {
+	
+	public static void main(String[] args) {
+		Magazyn m=new Magazyn();
+		m.load();
+		//wczytuj gosci
+
+	}
+
+}

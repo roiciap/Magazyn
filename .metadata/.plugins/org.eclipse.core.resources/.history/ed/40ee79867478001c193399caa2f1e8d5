@@ -1,0 +1,16 @@
+package projekt;
+
+public class Magazynier implements uzytkownik {
+
+	@Override
+	public String getMenu() {
+		return "1.Wyswietl magazyn\n2.Wykonaj Tranzakcje\n";
+	}
+
+	@Override
+	public void perform(String choice, Magazyn m) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

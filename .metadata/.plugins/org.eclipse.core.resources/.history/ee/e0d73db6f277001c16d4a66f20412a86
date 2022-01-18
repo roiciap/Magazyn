@@ -1,0 +1,8 @@
+package projekt;
+
+public class ServerWorker {
+	Magazyn m;
+	public ServerWorker(Magazyn mag) {
+		m=mag;
+	}
+}

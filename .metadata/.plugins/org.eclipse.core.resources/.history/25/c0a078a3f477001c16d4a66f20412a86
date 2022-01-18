@@ -1,0 +1,23 @@
+package projekt;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class ServerWorker extends Thread{
+	Magazyn m;
+	int serverPort;
+	Socket c;
+	Server s;
+	public ServerWorker(Server ser,Socket client,Magazyn mag) {
+			s=ser;
+			m=mag;
+			c=client;
+	}
+	
+
+		@Override 
+		public void run() {
+
+		}
+}
+

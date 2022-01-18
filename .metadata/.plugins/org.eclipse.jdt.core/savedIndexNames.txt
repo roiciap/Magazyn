@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+C:\Users\Bazyl\Desktop\psk\SEMESTR5\inz\.metadata\.plugins\org.eclipse.jdt.core
+497925240.index
+1881804744.index

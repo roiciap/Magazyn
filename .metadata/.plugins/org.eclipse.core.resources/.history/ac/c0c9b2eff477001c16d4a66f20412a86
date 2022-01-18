@@ -1,0 +1,38 @@
+package projekt;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Server extends Thread{
+	Magazyn m;
+	int serverPort;
+	List<ServerWorker> connectedList;
+	public Server(int port,Magazyn mag) {
+			this.serverPort=port;
+			m=mag;
+			connectedList=new ArrayList<ServerWorker>();
+		}
+	
+
+		@Override 
+		public void run() {
+			 try {
+			ServerSocket serverSocket = new ServerSocket(serverPort);
+			while(true) {
+				System.out.println("Czekam na polaczenie...");
+				Socket client = serverSocket.accept();
+				System.out.println("Polaczono z "+client);
+				ServerWorker polaczony = new ServerWorker(this,client,m);
+				connectedList.add(polaczony);
+				polaczony.start();
+			}
+			 }
+			 catch(IOException e) {
+				 e.printStackTrace();
+			 }
+		}
+	
+}

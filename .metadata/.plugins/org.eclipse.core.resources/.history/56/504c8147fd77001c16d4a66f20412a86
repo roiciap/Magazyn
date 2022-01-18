@@ -1,0 +1,93 @@
+package projekt;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Server extends Thread{
+	private Magazyn m;
+	int serverPort;
+	List<ServerWorker> connectedList;
+	public Server(int port,Magazyn mag) {
+			this.serverPort=port;
+			m=mag;
+			connectedList=new ArrayList<ServerWorker>();
+		}
+	
+
+		
+	public synchronized String magazynCommand(String msg) {
+		if(msg.startsWith("ADDNEWITEM")) {
+			String item=msg.split("=")[1];
+			String sektor=msg.split("=")[2];
+			Produkt p;
+			
+			String[] productInfo=item.split(";");
+			if(productInfo[0].charAt(0)=='2') {//waga
+				
+				ProduktWagaBuilder br=new ProduktWagaBuilder();
+				br.setPrefix(Integer.parseInt(productInfo[0].substring(0, 2)));
+				br.setSKU(Integer.parseInt(productInfo[0].substring(2, 7)));
+				br.setNazwa(productInfo[1]);
+				br.setCena(Integer.parseInt(productInfo[3]));
+				p=br.getProdukt();
+			}
+			else {//ilosc
+				String odp=productInfo[0];
+				ProduktIloscBuilder b=new ProduktIloscBuilder();
+				int Kraj=Integer.parseInt(odp.substring(0, 3));
+				int Producent=Integer.parseInt(odp.substring(3,7));
+				int Produkt=Integer.parseInt(odp.substring(7,12));
+				int kont=Integer.parseInt(odp.substring(12));
+				b.setKrajID(Kraj);
+				b.setProducentID(Producent);
+				b.setProduktID(Produkt);
+				b.setKontrolnyID(kont);
+				odp=productInfo[1];
+				b.setNazwa(odp);
+				b.setCena(Integer.parseInt(productInfo[3]));
+				p=b.getProdukt();
+			}
+			if(m.DodajProdukt(sektor, p)) {
+				return "SUCCES";
+			}
+			else {
+				return"FAIL";
+			}
+		}
+		
+		if(msg.startsWith("DELETEITEM")) {
+			String item=msg.split("=")[1];
+			if(m.sektory.usunProdukt(item)) {
+				return "SUCCES";
+			}
+			else {
+				return"FAIL";
+		}
+		
+		
+		return "FAIL";
+	}
+	
+	@Override 
+		public void run() {
+			 try {
+			ServerSocket serverSocket = new ServerSocket(serverPort);
+			while(true) {
+				System.out.println("Czekam na polaczenie...");
+				Socket client = serverSocket.accept();
+				System.out.println("Polaczono z "+client);
+				ServerWorker polaczony = new ServerWorker(this,client);
+				connectedList.add(polaczony);
+				polaczony.start();
+			}
+			 }
+			 catch(IOException e) {
+				 e.printStackTrace();
+			 }
+		}
+		
+	
+}

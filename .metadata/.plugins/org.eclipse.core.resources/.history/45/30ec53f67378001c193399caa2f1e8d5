@@ -1,0 +1,58 @@
+package projekt;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class ServerWorker extends Thread{
+
+	int serverPort;
+	private Socket c;
+	private Server s;
+	private PrintWriter out;
+	public ServerWorker(Server ser,Socket client) {
+			s=ser;
+			c=client;
+	}
+	
+
+		@Override 
+		public void run() {
+			try {
+				obslugaKlienta();
+		 }
+		 catch(IOException e) {
+			 e.printStackTrace();
+		 }
+		   catch (InterruptedException e) {
+	          e.printStackTrace();
+	      }
+
+		}
+		private void obslugaKlienta()throws IOException, InterruptedException {
+			 InputStream input = c.getInputStream();
+			 OutputStream outt=c.getOutputStream();
+			 out = new PrintWriter(outt,true);
+			 
+			 BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+			 String msg;
+			 
+			 while(true) {
+				 msg=reader.readLine();
+			 }
+		}
+		
+		public synchronized String MagazynSend(String msg) {
+			return s.magazynCommand(msg);
+		}
+		
+		public void send(String msg) {
+			
+		}
+}
+
