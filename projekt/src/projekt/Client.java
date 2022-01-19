@@ -28,7 +28,13 @@ public class Client {
 				
 				File plik = new File("users.txt");
 				if(!plik.exists()) {
+					FileWriter tmp = new FileWriter("users.txt");
 					plik.createNewFile();
+					
+					tmp.write("admin;admin;menager\nuser;user;user");
+					
+					tmp.close();
+					
 				}
 				Scanner reader = new Scanner(plik);
 				while(reader.hasNextLine()) {
