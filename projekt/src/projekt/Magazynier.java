@@ -17,7 +17,7 @@ public class Magazynier implements uzytkownik {
 		Scanner scan = new Scanner(System.in);
 		Inwentaryzacja inw=new Inwentaryzacja();
 		while(true) {
-			System.out.println("1.Zeskanuj\n2.edytuj\n3.Sprawdz\n4.Wykonaj\n10.Porzuc ");
+			System.out.println("1.Zeskanuj\n2.Sprawdz\n3.Wykonaj\n10.Porzuc ");
 			odp=scan.next();
 			if(odp.equals("1")) {
 				System.out.println("podaj kod");
@@ -27,16 +27,9 @@ public class Magazynier implements uzytkownik {
 				inw.zeskanuj(kod, ilosc);
 			}
 			if(odp.equals("2")) {
-				System.out.println("podaj kod");
-				kod=scan.next();
-				System.out.println("podaj ilosc zmiany");
-				ilosc=scan.nextInt();	
-				inw.edytuj(kod, ilosc);
-			}
-			if(odp.equals("3")) {
 				System.out.println(inw.getString());
 			}
-			if(odp.equals("4")) {
+			if(odp.equals("3")) {
 				System.out.println(inw.wykonaj(m));
 				break;
 			}

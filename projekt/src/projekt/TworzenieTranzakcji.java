@@ -19,8 +19,8 @@ public abstract class TworzenieTranzakcji {
 	
 	void DodajProdukt(String kod,int ilosc) {
 		
-		
 		if(produkty.containsKey(kod)) {
+			
 			Iterator<Map.Entry<String,Integer>> iterator=produkty.entrySet().iterator();
 			while(iterator.hasNext()) {
 				Map.Entry<String, Integer> rekord=iterator.next();

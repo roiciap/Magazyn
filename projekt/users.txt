@@ -1,1 +1,2 @@
-user;user;a
+admin;admin;menager
+user;user;user

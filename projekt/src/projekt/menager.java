@@ -66,11 +66,14 @@ public class menager extends Magazynier{
 					System.out.print("Kod produktow po ilosci nie moze zaczynac sie od 2\n");
 					return;
 				}
+				
 				Kraj=odp.substring(0, 3);
 				Producent=odp.substring(3,7);
 				Produkt=odp.substring(7,12);
 				kont=odp.substring(12);
+				
 				ProduktIloscBuilder bi=new ProduktIloscBuilder();
+				
 				if(!bi.setProduktID(Produkt)) return ;
 				if(!bi.setProducentID(Producent))return ;
 				if(!bi.setKrajID(Kraj))return ;
@@ -100,17 +103,13 @@ public class menager extends Magazynier{
 	}
 	
 	protected void Usuwanie(Magazyn m) {
-		System.out.println(m.sektory.getString());
+		System.out.println(m.getString());
 		System.out.println("podaj kod produktu ktory chcesz usunac/n");
 		Scanner scan = new Scanner(System.in);
 		String odp;
 		odp=scan.next();
 		
-		m.sektory.usunProdukt(odp);
-		//"DELETEITEM="+odp
-		
-
-
+		m.usunProdukt(odp);
 	}
 	
 	protected void sektor(Magazyn m) {
@@ -122,32 +121,7 @@ public class menager extends Magazynier{
 		m.DodajSektor(nowy);
 	}
 	
-	protected void addUser() throws IOException {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("podaj login nowego uzytkownika");
-		String login=scan.next();
-		System.out.println("podaj haslo nowego uzytkownika");
-		String haslo=scan.next();
-		System.out.println("wpisz menager jezeli chcesz dodac menagera w innym przypadku wpisz cokolwiek");
-		String mode=scan.next();
-
-		File plik=new File("users.txt");
-		Scanner reader = new Scanner(plik);
-		while(reader.hasNextLine()) {
-			String data= reader.nextLine();
-			String[] linia=data.split(";");
-			if(linia.length==3) {
-				if(linia[0].equals(login)) {
-					System.out.println("podany login jest zajety");
-				}
-			}
-		}
-		
-		BufferedWriter bw = new BufferedWriter(new FileWriter("users.txt"));
-		String dopisz=login+";"+haslo+";"+mode;
-		bw.write(dopisz);
-		bw.close();
-	}
+	
 	
 	@Override
 	public String getMenu() {
@@ -158,8 +132,7 @@ public class menager extends Magazynier{
 				+ "5.Dodaj sektor \n"
 				+ "6.Inwentaryzacja\n"
 				+ "7.Zapisz magazyn do pliku\n"
-				+"8.Odczytaj magazyn z pliku\n"
-				+"9.Dodaj uzytkownika\n";
+				+"8.Odczytaj magazyn z pliku\n";
 	}
 	
 	@Override 
@@ -187,16 +160,6 @@ public class menager extends Magazynier{
 		}
 		if(choice.equals("8")) {
 			m.load("magazyn.txt");
-		}
-		if(choice.equals("9")) {
-			try {
-				addUser();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			catch(IOException e2) {
-				e2.printStackTrace();
-			}
 		}
 	}
 }

@@ -23,5 +23,4 @@ public class Zakup implements Tranzakcja{
 		}
 
 	}
-
 }

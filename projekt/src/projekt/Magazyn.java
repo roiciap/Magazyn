@@ -11,9 +11,17 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Magazyn {
-	public Sektor sektory;//private
+	private Sektor sektory;//private
 	public Magazyn() {
 		sektory=new Sektor("magazyn");
+		File plik=new File("magazyn.txt");
+		if(!plik.exists()) {
+			try {
+				plik.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		load("magazyn.txt");
 	}
 	public Magazyn(String file) {
@@ -27,6 +35,10 @@ public class Magazyn {
 	
 	public Sektor getSektor() {
 		return sektory;
+	}
+	
+	public boolean usunProdukt(String s) {
+		return(sektory.usunProdukt(s));
 	}
 	
 	public Magazyn (Sektor s) {

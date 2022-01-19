@@ -16,7 +16,7 @@ public class Sprzedaz implements Tranzakcja{
 			produkty.put(rekord.getKey(), rekord.getValue());
 		}
 	}
-	public void dokonajTranzakcji(Magazyn m) {//dodac generowanie faktury
+	public void dokonajTranzakcji(Magazyn m) {
 		
 		for(Map.Entry<String, Integer> rekord : produkty.entrySet()) {
 			if(!m.ObslugaTranzakcji(rekord.getKey(),-rekord.getValue()))//generuj error w razie niepowodzenia

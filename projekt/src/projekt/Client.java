@@ -28,6 +28,9 @@ public class Client {
 				String haslo=scan.next();
 				
 				File plik = new File("users.txt");
+				if(!plik.exists()) {
+					plik.createNewFile();
+				}
 				Scanner reader = new Scanner(plik);
 				while(reader.hasNextLine()) {
 					String linia=reader.nextLine();
