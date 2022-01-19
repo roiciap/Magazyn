@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.io.*;
 
 public class Client {
-	private List<Magazyn> pamiatka=new ArrayList<Magazyn>();
 	private uzytkownik user;
 	private Magazyn magazyn;
 	
@@ -63,30 +62,8 @@ public class Client {
 		while(true) {
 			System.out.println(user.getMenu()+"zapis\ncofnij");
 			odp=scan.next();
-			if(odp.equals("zapis")) {
-				File tmpFile = File.createTempFile("tmpFile3",".txt");
-				
-					FileWriter tmpWriter = new FileWriter("tmpFile3.txt");
-					tmpWriter.write(magazyn.getString());
-					tmpWriter.close();
-					Magazyn m=new Magazyn("tmpFile3.txt");
-					pamiatka.add(0, m);
-					tmpFile.delete();
-				
-			}
-			else if(odp.equals("cofnij")) {
-				if(pamiatka.size()>0) {
-					Magazyn tmp=pamiatka.get(0);
-					magazyn.setMagazyn(tmp.getSektor());
-					pamiatka.remove(0);
-				}
-				else {
-					System.out.println("Brak zapisow\n");
-				}
-			}
-			else {
+
 			user.perform(odp,magazyn);
-			}
 		}
 	}
 }

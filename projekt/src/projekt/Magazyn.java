@@ -12,7 +12,9 @@ import java.util.Scanner;
 
 public class Magazyn {
 	private Sektor sektory;//private
+	private List<Snapshot> pamiatka;
 	public Magazyn() {
+		pamiatka=new ArrayList<Snapshot>();
 		sektory=new Sektor("magazyn");
 		File plik=new File("magazyn.txt");
 		if(!plik.exists()) {
@@ -76,6 +78,19 @@ public class Magazyn {
 		
 			 e.printStackTrace();
 		 }
+	}
+	public void zapisz() {
+		pamiatka.add(0, new Snapshot(getString()));
+	}
+	
+	public void wczytaj() {
+		if(pamiatka.size()>0) {
+			pamiatka.get(0).wczytaj(this);
+			pamiatka.remove(0);
+		}
+		else {
+			System.out.println("brak zapisanych stanow");
+		}
 	}
 	
 	public void load(String sciezkaPliku) {

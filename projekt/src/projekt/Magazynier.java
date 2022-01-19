@@ -87,7 +87,12 @@ public class Magazynier implements uzytkownik {
 		if(choice.equals("3")) {
 			inwentaryzacja(m);
 		}
-
+		if(choice.equals("zapis")) {
+			m.zapisz();
+		}
+		if(choice.equals("cofnij")) {
+			m.wczytaj();
+		}
 	}
 
 }

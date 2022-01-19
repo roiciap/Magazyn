@@ -27,6 +27,10 @@ public class menager extends Magazynier{
 				System.out.println("produkt typu waga musi zaczynac sie od 2!");
 				return;
 			}
+			if(line.length()!=7) {
+				System.out.println("id produktu typu waga musi miec dlugosc 7!");
+				return;
+			}
 			
 			String prefix=line.substring(0, 2);
 			String SKU=line.substring(2, 7);
@@ -160,6 +164,12 @@ public class menager extends Magazynier{
 		}
 		if(choice.equals("8")) {
 			m.load("magazyn.txt");
+		}
+		if(choice.equals("zapis")) {
+			m.zapisz();
+		}
+		if(choice.equals("cofnij")) {
+			m.wczytaj();
 		}
 	}
 }

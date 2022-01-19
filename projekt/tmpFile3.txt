@@ -1,10 +1,6 @@
 Sektor:A=[
-1111111111111;produkt1;0;123;
-1222222222222;produkt2;1234;123;
+1234567890123;pierwszyProdukt;100;123;
 ]
 
-Sektor:B=[
-2134567;abc;0;21;
-1234567890123;abcdef;0;132;
-]
-
+Sektor:B=[]
+Sektor:C=[]
