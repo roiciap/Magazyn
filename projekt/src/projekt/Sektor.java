@@ -115,20 +115,7 @@ public class Sektor implements Produkt{
 	
 	
 	
-	public boolean zmienAsortyment(Produkt produkt,int ilosc) {
-		if(ListaProduktow.isEmpty()) return false;
-		
-		if(checkID(produkt.getCode())) {
-			ProduktIterator it=new ProduktIterator(ListaProduktow);
-			if(it.getProdukt().zmienAsortyment(produkt,ilosc)) return true;
-			while(it.hasMore()) {
-				if(it.getNext().zmienAsortyment(produkt,ilosc)) return true;
-			}
-			return false;
-			
-		}
-		return false;
-	}
+	
 	
 	public boolean zmienAsortyment(String id,int ilosc) {
 		if(ListaProduktow.isEmpty()) return false;

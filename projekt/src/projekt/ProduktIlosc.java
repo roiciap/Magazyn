@@ -1,20 +1,20 @@
-package projekt;
+ package projekt;
 
 public class ProduktIlosc implements Produkt{
-	int KrajID; 
-	int ProducentID;
-	int ProduktID;
-	int KontrolnyID;
+	String KrajID; 
+	String ProducentID;
+	String ProduktID;
+	String KontrolnyID;
 	int cena;
 	int ilosc;
 	String nazwa;
 	
 	
 	public ProduktIlosc() {
-		KrajID=0;
-		ProducentID=0;
-		ProduktID=0;
-		KontrolnyID=0;
+		KrajID=new String();
+		ProducentID=new String();
+		ProduktID=new String();
+		KontrolnyID=new String();
 		cena=0;
 		ilosc=0;
 		nazwa=new String();
@@ -32,16 +32,7 @@ public class ProduktIlosc implements Produkt{
 		return cena;
 	}
 	
-	public boolean zmienAsortyment(Produkt p,int zmiana) {
-		if(!cmp(p)) return false; 
-		ilosc+=zmiana;
-		if (ilosc<0) {
-			ilosc-=zmiana;
-			return false;
-		}
-		return true;
-	}
-	
+
 	public boolean zmienAsortyment(String id,int zmiana) {
 		if(!checkID(id)) return false; 
 		ilosc+=zmiana;
@@ -53,17 +44,12 @@ public class ProduktIlosc implements Produkt{
 	}
 	
 	public boolean checkID(String id) {
-		if(id.equals(String.valueOf(KrajID)+String.valueOf(ProducentID)+String.valueOf(ProduktID)+String.valueOf(KontrolnyID)))
+		if(id.equals(getCode()))
 			return true;
 		
 		return false;
 	}
 	
-	public boolean cmp(Produkt a) {
-		if(a==this) return true;
-		
-		return false;
-	}
 	
 	public boolean usunProdukt(String kod) {
 		if(checkID(kod))

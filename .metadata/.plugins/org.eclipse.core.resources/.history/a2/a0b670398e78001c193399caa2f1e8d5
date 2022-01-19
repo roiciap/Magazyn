@@ -1,10 +1,7 @@
 package projekt;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class menager extends Magazynier{
@@ -21,16 +18,19 @@ public class menager extends Magazynier{
 			if(odp.equals("1")) {
 
 			System.out.print("Podaj id (7 znakow): ");
-			String line;			
-			line=scan.next();
-			if(!line.startsWith("2")) {
-				System.out.println("produkt typu waga musi zaczynac sie od 2!");
+			int SKU,prefix;
+			prefix=scan.nextInt();
+			if(prefix<1000000) {
+				System.out.println("kod jest za krotki");
 				return;
 			}
-			
-			String prefix=line.substring(0, 2);
-			String SKU=line.substring(2, 7);
+			if(prefix>=3000000 ||prefix<2000000) {
+				System.out.println("kod produktu wagowego musi siê zaczynaæ od 2");
+				return;
+			}
 
+			SKU=prefix%100000;
+			prefix=(prefix-SKU)/100000;
 			
 			
 			System.out.println("Podaj cene: ");
@@ -43,8 +43,8 @@ public class menager extends Magazynier{
 
 			
 			ProduktWagaBuilder br=new ProduktWagaBuilder();
-			if(!br.setPrefix(prefix)) return;
-			if(!br.setSKU(SKU))return ;
+			br.setPrefix(prefix);
+			br.setSKU(SKU);
 			br.setNazwa(odp);
 			br.setCena(cena);
 			ProduktWaga p=br.getProdukt();
@@ -55,7 +55,7 @@ public class menager extends Magazynier{
 			m.DodajProdukt(odp, p);
 			}
 			if(odp.equals("2")) {
-				String Kraj,Produkt,Producent,kont;
+				int Kraj,Produkt,Producent,kont;
 				System.out.print("Podaj id (13 znakow): ");
 				odp=scan.next();
 				if(odp.length()!=13) {
@@ -66,15 +66,15 @@ public class menager extends Magazynier{
 					System.out.print("Kod produktow po ilosci nie moze zaczynac sie od 2\n");
 					return;
 				}
-				Kraj=odp.substring(0, 3);
-				Producent=odp.substring(3,7);
-				Produkt=odp.substring(7,12);
-				kont=odp.substring(12);
+				Kraj=Integer.parseInt(odp.substring(0, 3));
+				Producent=Integer.parseInt(odp.substring(3,7));
+				Produkt=Integer.parseInt(odp.substring(7,12));
+				kont=Integer.parseInt(odp.substring(12));
 				ProduktIloscBuilder bi=new ProduktIloscBuilder();
-				if(!bi.setProduktID(Produkt)) return ;
-				if(!bi.setProducentID(Producent))return ;
-				if(!bi.setKrajID(Kraj))return ;
-				if(!bi.setKontrolnyID(kont))return ;
+				bi.setProduktID(Produkt);
+				bi.setProducentID(Producent);
+				bi.setKrajID(Kraj);
+				bi.setKontrolnyID(kont);
 				
 				System.out.print("Podaj cene: ");
 				odp=scan.next();
@@ -89,13 +89,7 @@ public class menager extends Magazynier{
 				System.out.print("Podaj sektor: ");
 				System.out.println(m.wypiszSektory());
 				odp=scan.next();
-				if(m.DodajProdukt(odp, p)) {
-					System.out.println("Udalo sie dodac produkt\n");
-				}
-				else {
-					System.out.println("Nie udalo sie dodac produktu ! \n");
-				}	
-				
+				m.DodajProdukt(odp, p);
 			}
 	}
 	
@@ -122,7 +116,7 @@ public class menager extends Magazynier{
 		m.DodajSektor(nowy);
 	}
 	
-	protected void addUser() throws IOException {
+	protected void addUser() throws FileNotFoundException {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("podaj login nowego uzytkownika");
 		String login=scan.next();
@@ -142,11 +136,10 @@ public class menager extends Magazynier{
 				}
 			}
 		}
-		
-		BufferedWriter bw = new BufferedWriter(new FileWriter("users.txt"));
 		String dopisz=login+";"+haslo+";"+mode;
-		bw.write(dopisz);
-		bw.close();
+		
+		//sprawdz czy nie ma juz tego loginu jak nie to dodaj linie (login+";"+haslo+";"+rola)
+		
 	}
 	
 	@Override
@@ -194,9 +187,12 @@ public class menager extends Magazynier{
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			catch(IOException e2) {
-				e2.printStackTrace();
-			}
+		}
+		if(choice.equals("10")) {
+			//m.getString() <--na podstawie-- new Magazyn() 
+		}
+		if(choice.equals("11")) {
+			
 		}
 	}
 }

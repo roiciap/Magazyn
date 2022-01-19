@@ -97,8 +97,8 @@ public class Magazyn {
 				if(productInfo[0].charAt(0)=='2') {//waga
 					
 					ProduktWagaBuilder br=new ProduktWagaBuilder();
-					br.setPrefix(Integer.parseInt(productInfo[0].substring(0, 2)));
-					br.setSKU(Integer.parseInt(productInfo[0].substring(2, 7)));
+					br.setPrefix(productInfo[0].substring(0, 2));
+					br.setSKU(productInfo[0].substring(2, 7));
 					br.setNazwa(productInfo[1]);
 					br.setWaga(Integer.parseInt(productInfo[2]));
 					br.setCena(Integer.parseInt(productInfo[3]));
@@ -108,10 +108,10 @@ public class Magazyn {
 				else {//ilosc
 					String odp=productInfo[0];
 					ProduktIloscBuilder b=new ProduktIloscBuilder();
-					int Kraj=Integer.parseInt(odp.substring(0, 3));
-					int Producent=Integer.parseInt(odp.substring(3,7));
-					int Produkt=Integer.parseInt(odp.substring(7,12));
-					int kont=Integer.parseInt(odp.substring(12));
+					String Kraj=odp.substring(0, 3);
+					String Producent=odp.substring(3,7);
+					String Produkt=odp.substring(7,12);
+					String kont=odp.substring(12);
 					b.setKrajID(Kraj);
 					b.setProducentID(Producent);
 					b.setProduktID(Produkt);
@@ -151,6 +151,9 @@ public class Magazyn {
 	public String inwentaryzacja(Map<String,Integer> zeskanowane) {
 		String[] items=sektory.getString().split("\n");
 		String odp=new String();
+		
+		
+		
 		for(int i=0;i<items.length;i++) {
 			if(items[i].contains(";")) {
 				String[] linia=items[i].split(";");
@@ -165,6 +168,7 @@ public class Magazyn {
 				}
 			}
 		}
+		
 		return odp;
 	}
 

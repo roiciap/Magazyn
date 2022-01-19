@@ -11,24 +11,24 @@ public class ProduktIloscBuilder {
 		this.produkt=new ProduktIlosc();
 	}
 	
-	public boolean setProduktID(int id) {
-		if(id>99999) return false;
+	public boolean setProduktID(String id) {
+		if(id.length()!=5) return false;
 		produkt.ProduktID=id;
 		return true;
 	}
 	
-	public boolean setKrajID(int id) {
-		if(id>999) return false;
+	public boolean setKrajID(String id) {
+		if(id.length()!=3) return false;
 		produkt.KrajID=id;
 		return true;
 	}
-	public boolean setKontrolnyID(int id) {
-		if(id>9) return false;
+	public boolean setKontrolnyID(String id) {
+		if(id.length()!=1) return false;
 		produkt.KontrolnyID=id;
 		return true;
 	}
-	public boolean setProducentID(int id) {
-		if(id>9999) return false;
+	public boolean setProducentID(String id) {
+		if(id.length()!=4) return false;
 		produkt.ProducentID=id;
 		return true;
 	}

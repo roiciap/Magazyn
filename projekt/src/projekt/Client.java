@@ -8,9 +8,9 @@ import java.util.Scanner;
 import java.io.*;
 
 public class Client {
-	List<Magazyn> pamiatka=new ArrayList<Magazyn>();
-	uzytkownik user;
-	Magazyn magazyn;
+	private List<Magazyn> pamiatka=new ArrayList<Magazyn>();
+	private uzytkownik user;
+	private Magazyn magazyn;
 	
 	public Client(uzytkownik u,Magazyn m) {
 		user=u;
@@ -34,7 +34,7 @@ public class Client {
 					if(linia.contains(";")) {
 						String[] data=linia.split(";");
 						if(data[0].equals(login) && data[1].equals(haslo)){
-							if(data[2].equals("meneger")) {
+							if(data[2].equals("menager")) {
 
 								c=new Client(new menager(),new Magazyn());
 								c.obsluga();

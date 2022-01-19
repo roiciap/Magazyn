@@ -15,8 +15,8 @@ public class ProduktWagaBuilder {
 		produkt.nazwa=nazwa;
 	}
 	
-	public boolean setPrefix(int prefix) {
-		if(prefix>99) return false;
+	public boolean setPrefix(String prefix) {
+		if(prefix.length()!=2) return false;
 		
 		produkt.prefix=prefix;
 		return true;
@@ -25,8 +25,8 @@ public class ProduktWagaBuilder {
 	public void setWaga(int waga) {
 		produkt.waga=waga;
 	}
-	public boolean setSKU(int SKU) {
-		if(SKU>99999) return false;
+	public boolean setSKU(String SKU) {
+		if(SKU.length()!=5) return false;
 		
 		produkt.SKU=SKU;
 		return true;
